@@ -4,6 +4,7 @@ sleep 5
 HOSTNAME=$(hostname -a)
 DOMAIN=$(hostname -d)
 CONTAINERIP=$(ip addr | grep 'state UP' -A2 | tail -n1 | awk '{print $2}' | cut -f1  -d'/')
+PUBLICIP=$(dig +short myip.opendns.com @resolver1.opendns.com)
 RANDOMHAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMSPAM=$(date +%s|sha256sum|base64|head -c 10)
 RANDOMVIRUS=$(date +%s|sha256sum|base64|head -c 10)
@@ -113,7 +114,7 @@ zimbraFeatureBriefcasesEnabled="Enabled"
 zimbraFeatureTasksEnabled="Enabled"
 zimbraIPMode="ipv4"
 zimbraMailProxy="FALSE"
-zimbraMtaMyNetworks="127.0.0.0/8 $CONTAINERIP/32 [::1]/128 [fe80::]/64"
+zimbraMtaMyNetworks="127.0.0.0/8 $CONTAINERIP/32 $PUBLICIP/32 [::1]/128 [fe80::]/64"
 zimbraPrefTimeZoneId="America/Los_Angeles"
 zimbraReverseProxyLookupTarget="TRUE"
 zimbraVersionCheckInterval="1d"
