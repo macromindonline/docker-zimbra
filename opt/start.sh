@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ ! -d "$DIRECTORY" ]; then
+if [ ! -d "/opt/zimbra" ]; then
 
   ## Preparing all the variables like IP, Hostname, etc, all of them from the container
   sleep 5
