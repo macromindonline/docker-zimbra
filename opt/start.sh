@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 ## Preparing all the variables like IP, Hostname, etc, all of them from the container
 sleep 5
 HOSTNAME=$(hostname -a)
@@ -127,21 +128,24 @@ zimbra_require_interprocess_security="1"
 zimbra_server_hostname="$HOSTNAME.$DOMAIN"
 INSTALL_PACKAGES="zimbra-core zimbra-ldap zimbra-logger zimbra-mta zimbra-snmp zimbra-store zimbra-apache zimbra-spell zimbra-memcached zimbra-proxy"
 EOF
-##Install the Zimbra Collaboration ##
-echo "Downloading Zimbra Collaboration 8.8.7"
-wget -O /opt/zimbra-install/zimbra-zcs-8.8.7.tar.gz https://files.zimbra.com/downloads/8.8.7_GA/zcs-8.8.7_GA_1964.UBUNTU16_64.20180223145016.tgz
 
-echo "Extracting files from the archive"
-tar xzvf /opt/zimbra-install/zimbra-zcs-8.8.7.tar.gz -C /opt/zimbra-install/
+if [[ ! -d "/opt/zimbra" ]]; then
+  ##Install the Zimbra Collaboration ##
+  echo "Downloading Zimbra Collaboration 8.8.7"
+  wget -O /opt/zimbra-install/zimbra-zcs-8.8.7.tar.gz https://files.zimbra.com/downloads/8.8.7_GA/zcs-8.8.7_GA_1964.UBUNTU16_64.20180223145016.tgz
 
-echo "Update package cache"
-apt update
+  echo "Extracting files from the archive"
+  tar xzvf /opt/zimbra-install/zimbra-zcs-8.8.7.tar.gz -C /opt/zimbra-install/
 
-echo "Installing Zimbra Collaboration just the Software"
-cd /opt/zimbra-install/zcs-* && ./install.sh -s < /opt/zimbra-install/installZimbra-keystrokes
+  echo "Update package cache"
+  apt update
 
-echo "Installing Zimbra Collaboration injecting the configuration"
-/opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installZimbraScript
+  echo "Installing Zimbra Collaboration just the Software"
+  cd /opt/zimbra-install/zcs-* && ./install.sh -s < /opt/zimbra-install/installZimbra-keystrokes
+
+  echo "Installing Zimbra Collaboration injecting the configuration"
+  /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installZimbraScript
+fi
 
 su - zimbra -c 'zmcontrol restart'
 echo "You can access now to your Zimbra Collaboration Server"
