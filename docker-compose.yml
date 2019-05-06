@@ -3,6 +3,7 @@ services:
  mail:
   image: macromind/docker-zimbra:latest
   hostname: mail.ogestor.com.br
+  restart: always
   environment:
    - PASSWORD=M4cr0m1ndZimbra
   ports:
