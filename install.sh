@@ -38,7 +38,7 @@ echo "Installing Docker Compose"
 curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &>/dev/null
 chmod 700 /usr/local/bin/docker-compose
 
-echo "Creating Docker Compose yml file"
+echo "Creating Docker Compose yml file..."
 cat <<EOF >>/root/docker-compose.yml
 version: "3.4"
 services:
