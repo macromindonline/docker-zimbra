@@ -38,10 +38,38 @@ echo "Installing Docker Compose"
 curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &>/dev/null
 chmod 700 /usr/local/bin/docker-compose
 
-echo "Configuring Docker Compose yml file"
-curl -L "https://raw.githubusercontent.com/macromindonline/docker-zimbra/master/docker-compose.yml" -o /root/docker-compose.yml &>/dev/null
-sed -i -e "s/###HOSTNAME###/${MAIL_HOSTNAME}/g" /root/docker-compose.yml
-sed -i -e "s/###SECRET###/${MAIL_SECRET}/g" /root/docker-compose.yml
+echo "Creating Docker Compose yml file"
+cat <<EOF >>/root/docker-compose.yml
+version: "3.4"
+services:
+ mail:
+  image: macromind/docker-zimbra:latest
+  restart: always
+  hostname: $MAIL_HOSTNAME
+  environment:
+   - PASSWORD=$MAIL_SECRET
+  ports:
+   - 25:25
+   - 80:80
+   - 110:110
+   - 143:143
+   - 443:443
+   - 465:465
+   - 587:587
+   - 993:993
+   - 995:995
+   - 3443:3443
+   - 5222:5222
+   - 5223:5223
+   - 7071:7071
+   - 8080:8080
+   - 8443:8443
+   - 9071:9071
+  networks:
+   - mail_network
+networks:
+ mail_network:
+EOF
 
 echo "All done…"
 echo "==============================================="
