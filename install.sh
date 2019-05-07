@@ -37,7 +37,7 @@ apt update &>/dev/null && apt install docker-ce -y &>/dev/null
 echo "Installing Docker Compose"
 curl -L "https://github.com/docker/compose/releases/download/1.24.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose &>/dev/null
 if [[ -f "/usr/local/bin/docker-compose" ]]; then
-    /usr/local/bin/docker-compose
+    chmod 700 /usr/local/bin/docker-compose
 else
     echo "Docker compose not installed..."
     exit 1
