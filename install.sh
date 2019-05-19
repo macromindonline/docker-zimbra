@@ -48,6 +48,7 @@ cat <<EOF >>/root/docker-compose.yml
 version: "3.4"
 services:
  mail:
+  container_name: zimbra
   image: macromind/docker-zimbra:latest
   restart: always
   hostname: $MAIL_HOSTNAME
