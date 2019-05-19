@@ -26,14 +26,14 @@ sudo service dnsmasq restart
 ##Creating the Zimbra Collaboration Config File ##
 touch /opt/zimbra-install/installZimbraScript
 cat <<EOF >/opt/zimbra-install/installZimbraScript
-AVDOMAIN="$DOMAIN"
-AVUSER="admin@$DOMAIN"
-CREATEADMIN="admin@$DOMAIN"
+AVDOMAIN="$HOSTNAME.$DOMAIN"
+AVUSER="admin@$HOSTNAME.$DOMAIN"
+CREATEADMIN="admin@$HOSTNAME.$DOMAIN"
 CREATEADMINPASS="$PASSWORD"
-CREATEDOMAIN="$DOMAIN"
+CREATEDOMAIN="$HOSTNAME.$DOMAIN"
 DOCREATEADMIN="yes"
 DOCREATEDOMAIN="yes"
-DOTRAINSA="yes"
+DOTRAINSA="no"
 EXPANDMENU="no"
 HOSTNAME="$HOSTNAME.$DOMAIN"
 HTTPPORT="80"
@@ -145,10 +145,14 @@ if [[ ! -d "/opt/zimbra" || -z "$(ls -A /opt/zimbra)" ]]; then
 
   echo "Installing Zimbra Collaboration injecting the configuration"
   /opt/zimbra/libexec/zmsetup.pl -c /opt/zimbra-install/installZimbraScript
+  
+  echo "Zimbra installed!"
+else
+  echo "You can access your Zimbra Collaboration Server. Please wait."
 fi
 
+echo "Starting services..."
 su - zimbra -c 'zmcontrol restart'
-echo "You can access now to your Zimbra Collaboration Server"
 
 if [[ $1 == "-d" ]]; then
   while true; do sleep 1000; done
