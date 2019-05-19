@@ -26,7 +26,7 @@ echo "Mail admin password: ${MAIL_SECRET}"
 echo "Docker hostname: ${DOCKER_HOSTNAME}"
 
 echo "Updating apt packages…"
-apt update &>/dev/null && apt dist-upgrade -y &>/dev/null
+apt update &>/dev/null && apt dist-upgrade -y
 apt install vim-nox htop atop nload ncdu pv netcat build-essential apt-transport-https ca-certificates software-properties-common curl dnsutils -y &>/dev/null
 
 echo "Installing Docker CE"
