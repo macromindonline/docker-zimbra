@@ -16,9 +16,9 @@ mv /etc/dnsmasq.conf /etc/dnsmasq.conf.old
 cat <<EOF >>/etc/dnsmasq.conf
 server=8.8.8.8
 listen-address=127.0.0.1
-domain=$DOMAIN
-mx-host=$DOMAIN,$HOSTNAME.$DOMAIN,0
-address=/$HOSTNAME.$DOMAIN/$CONTAINERIP
+domain=$HOSTNAME.$DOMAIN
+mx-host=$HOSTNAME.$DOMAIN,$HOSTNAME.$DOMAIN,0
+address=/$HOSTNAME.$DOMAIN/$PUBLICIP
 user=root
 EOF
 sudo service dnsmasq restart
