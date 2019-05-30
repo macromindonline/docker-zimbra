@@ -20,9 +20,15 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
   rsyslog \
   unzip
   
-RUN groupadd -g 999 zimbra
+RUN groupadd -g 999 zimbra && groupadd -g 998 postfix && groupadd -g 113 clamav
 
-RUN useradd -s /bin/bash -d /opt/zimbra -p ${RANDOM} -u 999 -g zimbra zimbra
+RUN useradd -s /bin/bash -d /opt/zimbra -p $(date +%s|sha256sum|base64|head -c 32) -u 999 -g zimbra zimbra
+
+RUN usermod -a -G adm zimbra && usermod -a -G tty zimbra && usermod -a -G postfix zimbra
+
+RUN useradd -s /bin/false -d /opt/zimbra/postfix -g postfix postfix
+
+RUN useradd -s /bin/false -d /var/lib/clamav -g clamav clamav
 
 VOLUME ["/opt/zimbra"]
 
