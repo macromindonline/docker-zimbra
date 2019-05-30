@@ -27,7 +27,7 @@ echo "Docker hostname: ${DOCKER_HOSTNAME}"
 
 echo "Updating apt packages…"
 apt update &>/dev/null && apt dist-upgrade -y
-apt install vim-nox htop atop nload ncdu pv netcat build-essential apt-transport-https ca-certificates software-properties-common curl dnsutils -y &>/dev/null
+apt install vim-nox htop atop nload ncdu pv netcat build-essential apt-transport-https ca-certificates software-properties-common curl dnsutils tmux -y &>/dev/null
 
 echo "Installing Docker CE"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &>/dev/null
