@@ -19,6 +19,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
   sudo \
   rsyslog \
   unzip
+  
+RUN groupadd -g 999 zimbra
+
+RUN useradd -s /bin/bash -d /opt/zimbra -p ${RANDOM} -u 999 -g zimbra zimbra
 
 VOLUME ["/opt/zimbra"]
 
